@@ -1,0 +1,2 @@
+# Digital Envisioned legal pages: serve index.html in this folder
+DirectoryIndex index.html index.php
