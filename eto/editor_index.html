@@ -1,0 +1,2575 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0D1424">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<title>BuildAI — AI Website Builder | $200/mo Unlimited</title>
+<!-- DE-SEO-B 2026-11-03 -->
+<meta name="description" content="Tell BuildAI about your business and it builds a professional website, then a sales funnel, automatically. Edit everything with drag and drop.">
+<link rel="canonical" href="https://editor.digitalenvisioned.net/">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="website"><meta property="og:site_name" content="Digital Envisioned"><meta property="og:locale" content="en_US"><meta property="og:title" content="BuildAI — AI Website Builder | $200/mo Unlimited"><meta property="og:description" content="Tell BuildAI about your business and it builds a professional website, then a sales funnel, automatically. Edit everything with drag and drop."><meta property="og:url" content="https://editor.digitalenvisioned.net/"><meta property="og:image" content="https://digitalenvisioned.net/mon/og-default.jpg">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="BuildAI — AI Website Builder | $200/mo Unlimited"><meta name="twitter:description" content="Tell BuildAI about your business and it builds a professional website, then a sales funnel, automatically. Edit everything with drag and drop."><meta name="twitter:image" content="https://digitalenvisioned.net/mon/og-default.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://digitalenvisioned.net/#organization","name":"Digital Envisioned","url":"https://digitalenvisioned.net/","logo":"https://digitalenvisioned.net/mon/favicon-32.png","founder":{"@type":"Person","name":"Joshua Eugene Newton","jobTitle":"Founder / Owner / Creator"},"telephone":"+1-205-578-8884","email":"support@digitalenvisioned.net","areaServed":{"@type":"City","name":"Montgomery","containedInPlace":{"@type":"State","name":"Alabama"}},"address":{"@type":"PostalAddress","addressLocality":"Montgomery","addressRegion":"AL","addressCountry":"US"},"contactPoint":{"@type":"ContactPoint","telephone":"+1-205-578-8884","email":"support@digitalenvisioned.net","contactType":"customer support","areaServed":"US","availableLanguage":"en"}}</script>
+<!-- /DE-SEO-B -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Instrument+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   BUILDAI — COMPLETE 3-PHASE APP
+   Phase 1: Landing + Auth
+   Phase 2: AI Intake Wizard + Site Generation
+   Phase 3: Drag-Drop Editor + Funnel Builder
+═══════════════════════════════════════════ */
+:root {
+  --bg: #0a0f1d;
+  --s1: #0d1424;
+  --s2: #111a2e;
+  --s3: #16223a;
+  --s4: #1c2a45;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.13);
+
+  --violet: #c59b27;
+  --violet-bright: #e7c65a;
+  --violet-dim: rgba(197,155,39,0.15);
+  --violet-glow: rgba(197,155,39,0.25);
+
+  --cyan: #5b7ba6;
+  --cyan-dim: rgba(91,123,166,0.14);
+  --green: #10b981;
+  --green-dim: rgba(16,185,129,0.12);
+  --amber: #f59e0b;
+  --red: #ef4444;
+
+  --text: #f4f6fb;
+  --text2: #98a2bc;
+  --text3: #5d6880;
+
+  --r: 8px;
+  --r-lg: 16px;
+  --r-xl: 24px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Instrument Sans',sans-serif;
+  font-size:16px;
+  line-height:1.6;
+  overflow-x:hidden;
+  min-height:100vh;
+}
+
+/* ── PHASES ── */
+.phase { display: none; min-height: 100vh; }
+.phase.active { display: flex; flex-direction: column; }
+
+/* ══════════════════════════════════════
+   PHASE 1 — LANDING + AUTH
+══════════════════════════════════════ */
+#phase1 {
+  background: var(--bg);
+}
+
+/* animated mesh bg */
+.mesh-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+.mesh-bg::before {
+  content:'';
+  position:absolute;
+  top:-40%;left:-20%;
+  width:80%;height:80%;
+  border-radius:50%;
+  background:radial-gradient(ellipse,rgba(197,155,39,0.12) 0%,transparent 65%);
+  animation: drift1 12s ease-in-out infinite alternate;
+}
+.mesh-bg::after {
+  content:'';
+  position:absolute;
+  bottom:-30%;right:-15%;
+  width:70%;height:70%;
+  border-radius:50%;
+  background:radial-gradient(ellipse,rgba(91,123,166,0.08) 0%,transparent 65%);
+  animation: drift2 15s ease-in-out infinite alternate;
+}
+@keyframes drift1{from{transform:translate(0,0)}to{transform:translate(40px,30px)}}
+@keyframes drift2{from{transform:translate(0,0)}to{transform:translate(-30px,-40px)}}
+
+/* grid lines */
+.grid-lines {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    linear-gradient(rgba(197,155,39,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(197,155,39,0.03) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+/* NAV */
+.p1-nav {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 2rem;
+  border-bottom: 1px solid var(--border);
+  background: rgba(7,7,10,0.8);
+  backdrop-filter: blur(12px);
+}
+.logo {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.02em;
+}
+.logo span { color: var(--violet-bright); }
+.nav-right { display: flex; gap: 0.75rem; align-items: center; }
+.btn-nav-ghost {
+  background: transparent;
+  border: 1px solid var(--border2);
+  color: var(--text2);
+  font-family: 'Instrument Sans',sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 8px 18px;
+  border-radius: var(--r);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-nav-ghost:hover { border-color: var(--violet); color: var(--text); }
+.btn-nav-primary {
+  background: var(--violet);
+  border: none;
+  color: #fff;
+  font-family: 'Instrument Sans',sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 9px 20px;
+  border-radius: var(--r);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+.btn-nav-primary:hover { background: var(--violet-bright); transform: translateY(-1px); }
+
+/* HERO */
+.p1-hero {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 5rem 1.5rem 3rem;
+  gap: 0;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--violet-dim);
+  border: 1px solid var(--violet-glow);
+  border-radius: 100px;
+  padding: 6px 16px;
+  margin-bottom: 2rem;
+  animation: fadeUp 0.6s ease both;
+}
+.hero-badge-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--violet-bright);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+.hero-badge span {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--violet-bright);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.hero-h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2.75rem, 7.5vw, 6rem);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  margin-bottom: 1.5rem;
+  animation: fadeUp 0.6s 0.1s ease both;
+}
+.hero-h1 .grad {
+  background: linear-gradient(135deg, var(--violet-bright), var(--cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-sub {
+  font-size: 1.15rem;
+  color: var(--text2);
+  max-width: 580px;
+  font-weight: 300;
+  line-height: 1.75;
+  margin-bottom: 2.5rem;
+  animation: fadeUp 0.6s 0.2s ease both;
+}
+.hero-sub strong { color: var(--text); font-weight: 500; }
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* AUTH CARD */
+.auth-card {
+  background: var(--s1);
+  border: 1px solid var(--border2);
+  border-radius: var(--r-xl);
+  padding: 2.25rem;
+  width: 100%;
+  max-width: 440px;
+  animation: fadeUp 0.6s 0.3s ease both;
+  position: relative;
+  overflow: hidden;
+}
+.auth-card::before {
+  content:'';
+  position:absolute;
+  top:-1px;left:20%;right:20%;height:2px;
+  background:linear-gradient(90deg,transparent,var(--violet),var(--cyan),transparent);
+}
+.auth-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: var(--s2);
+  border-radius: var(--r);
+  padding: 4px;
+  margin-bottom: 1.5rem;
+  gap: 4px;
+}
+.auth-tab {
+  background: transparent;
+  border: none;
+  color: var(--text3);
+  font-family: 'Instrument Sans',sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 9px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.auth-tab.active {
+  background: var(--s4);
+  color: var(--text);
+}
+
+.form-field { margin-bottom: 1rem; }
+.form-field label {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text2);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.form-field input {
+  width: 100%;
+  background: var(--s2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  color: var(--text);
+  font-family: 'Instrument Sans',sans-serif;
+  font-size: 0.95rem;
+  padding: 11px 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.form-field input:focus { border-color: var(--violet); }
+.form-field input::placeholder { color: var(--text3); }
+
+.btn-auth {
+  width: 100%;
+  background: linear-gradient(135deg, var(--violet), #5b21b6);
+  border: none;
+  color: #fff;
+  font-family: 'Instrument Sans',sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 13px;
+  border-radius: var(--r);
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.15s;
+  margin-top: 0.5rem;
+}
+.btn-auth:hover { opacity: 0.9; transform: translateY(-1px); }
+.btn-auth:active { transform: translateY(0); }
+
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 1.25rem 0;
+}
+.auth-divider::before,.auth-divider::after {
+  content:''; flex:1; height:1px; background:var(--border);
+}
+.auth-divider span { font-size: 12px; color: var(--text3); }
+
+.btn-google {
+  width: 100%;
+  background: var(--s2);
+  border: 1px solid var(--border2);
+  color: var(--text);
+  font-family: 'Instrument Sans',sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 11px;
+  border-radius: var(--r);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: border-color 0.2s;
+}
+.btn-google:hover { border-color: var(--border2); background: var(--s3); }
+
+.auth-footer {
+  text-align: center;
+  margin-top: 1.25rem;
+  font-size: 0.8rem;
+  color: var(--text3);
+}
+.auth-footer a { color: var(--violet-bright); text-decoration: none; cursor: pointer; }
+
+/* FEATURES STRIP */
+.features-strip {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border-top: 1px solid var(--border);
+}
+.feat-item {
+  background: var(--bg);
+  padding: 1.5rem 2rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+.feat-icon {
+  width: 40px; height: 40px; min-width: 40px;
+  border-radius: var(--r);
+  background: var(--violet-dim);
+  border: 1px solid var(--violet-glow);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+}
+.feat-title { font-size: 0.9rem; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+.feat-desc { font-size: 0.8rem; color: var(--text3); font-weight: 300; line-height: 1.5; }
+
+/* PRICE BADGE */
+.price-badge {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 1.5rem;
+  border-top: 1px solid var(--border);
+  background: var(--s1);
+}
+.price-badge p {
+  font-size: 0.875rem;
+  color: var(--text2);
+}
+.price-badge strong {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.5rem;
+  color: var(--violet-bright);
+}
+
+/* ══════════════════════════════════════
+   PHASE 2 — AI INTAKE + GENERATION
+══════════════════════════════════════ */
+#phase2 {
+  background: var(--bg);
+  flex-direction: column;
+}
+
+.p2-header {
+  background: rgba(7,7,10,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.p2-user {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.user-avatar {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--violet-dim);
+  border: 1px solid var(--violet-glow);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.8rem;
+  color: var(--violet-bright);
+  font-weight: 600;
+}
+.user-name { font-size: 0.875rem; font-weight: 500; color: var(--text); }
+
+/* WIZARD */
+.wizard-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+  position: relative;
+}
+
+.wizard-progress {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 2.5rem;
+  width: 100%;
+  max-width: 600px;
+}
+.wp-step {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+.wp-dot {
+  width: 32px; height: 32px; min-width: 32px;
+  border-radius: 50%;
+  border: 2px solid var(--border2);
+  background: var(--s1);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--text3);
+  transition: all 0.3s;
+  position: relative;
+  z-index: 1;
+}
+.wp-dot.active { border-color: var(--violet); background: var(--violet-dim); color: var(--violet-bright); }
+.wp-dot.done { border-color: var(--green); background: var(--green-dim); color: var(--green); }
+.wp-line {
+  flex: 1;
+  height: 2px;
+  background: var(--border);
+  transition: background 0.3s;
+}
+.wp-line.done { background: var(--green); }
+
+/* QUESTION CARD */
+.question-card {
+  background: var(--s1);
+  border: 1px solid var(--border2);
+  border-radius: var(--r-xl);
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 620px;
+  position: relative;
+  overflow: hidden;
+}
+.question-card::before {
+  content:'';
+  position:absolute;
+  top:-1px;left:15%;right:15%;height:2px;
+  background:linear-gradient(90deg,transparent,var(--violet),transparent);
+}
+
+.q-step-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--violet-bright);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 0.625rem;
+}
+.q-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+.q-subtitle {
+  font-size: 0.9rem;
+  color: var(--text2);
+  font-weight: 300;
+  margin-bottom: 1.75rem;
+}
+
+/* choice grid */
+.choice-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+.choice-btn {
+  background: var(--s2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 1rem;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.choice-btn:hover { border-color: var(--violet); background: var(--violet-dim); }
+.choice-btn.selected { border-color: var(--violet); background: var(--violet-dim); }
+.choice-icon { font-size: 1.25rem; margin-bottom: 4px; }
+.choice-label { font-size: 0.875rem; font-weight: 500; color: var(--text); }
+.choice-sub { font-size: 0.775rem; color: var(--text3); font-weight: 300; }
+
+/* textarea */
+.q-textarea {
+  width: 100%;
+  background: var(--s2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  color: var(--text);
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 300;
+  padding: 12px 14px;
+  outline: none;
+  resize: vertical;
+  min-height: 100px;
+  transition: border-color 0.2s;
+  margin-bottom: 1.5rem;
+}
+.q-textarea:focus { border-color: var(--violet); }
+.q-textarea::placeholder { color: var(--text3); }
+
+.q-input {
+  width: 100%;
+  background: var(--s2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  color: var(--text);
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 300;
+  padding: 12px 14px;
+  outline: none;
+  transition: border-color 0.2s;
+  margin-bottom: 1.5rem;
+}
+.q-input:focus { border-color: var(--violet); }
+.q-input::placeholder { color: var(--text3); }
+
+/* color palette picker */
+.palette-row {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+.palette-btn {
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.2s;
+  position: relative;
+}
+.palette-btn:hover { transform: scale(1.1); }
+.palette-btn.selected { border-color: #fff; }
+.palette-btn span {
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  color: var(--text3);
+  white-space: nowrap;
+}
+
+/* wizard nav */
+.wizard-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+.btn-wizard-back {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text2);
+  font-family: 'Instrument Sans',sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 10px 20px;
+  border-radius: var(--r);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-wizard-back:hover { border-color: var(--border2); color: var(--text); }
+.btn-wizard-next {
+  background: var(--violet);
+  border: none;
+  color: #fff;
+  font-family: 'Instrument Sans',sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 11px 28px;
+  border-radius: var(--r);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn-wizard-next:hover { background: var(--violet-bright); transform: translateY(-1px); }
+.btn-wizard-next:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+/* BUILDING SCREEN */
+.building-screen {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 4rem 2rem;
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+}
+.building-screen.visible { display: flex; }
+.building-icon {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background: var(--violet-dim);
+  border: 2px solid var(--violet-glow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  margin-bottom: 1.75rem;
+  animation: spin-slow 3s linear infinite;
+}
+@keyframes spin-slow { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+.building-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+.building-sub { color: var(--text2); font-weight: 300; margin-bottom: 2rem; }
+.build-progress-bar {
+  width: 100%;
+  height: 4px;
+  background: var(--s3);
+  border-radius: 100px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+.build-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--violet), var(--cyan));
+  border-radius: 100px;
+  width: 0%;
+  transition: width 0.4s ease;
+}
+.build-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  text-align: left;
+  width: 100%;
+}
+.build-step-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: var(--r);
+  font-size: 0.875rem;
+  color: var(--text3);
+  background: transparent;
+  transition: all 0.3s;
+}
+.build-step-item.active {
+  background: var(--s2);
+  color: var(--text);
+}
+.build-step-item.done { color: var(--green); }
+.build-step-item .bs-icon { font-size: 1rem; min-width: 20px; }
+
+/* ══════════════════════════════════════
+   PHASE 3 — EDITOR + FUNNEL BUILDER
+══════════════════════════════════════ */
+#phase3 {
+  background: var(--bg);
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.editor-header {
+  background: var(--s1);
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  flex-wrap: wrap;
+}
+.editor-mode-tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--s2);
+  border-radius: var(--r);
+  padding: 4px;
+}
+.mode-tab {
+  background: transparent;
+  border: none;
+  color: var(--text3);
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 0.825rem;
+  font-weight: 500;
+  padding: 7px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.mode-tab.active {
+  background: var(--violet);
+  color: #fff;
+}
+.editor-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.btn-editor {
+  background: transparent;
+  border: 1px solid var(--border2);
+  color: var(--text2);
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 7px 14px;
+  border-radius: var(--r);
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.btn-editor:hover { border-color: var(--violet); color: var(--text); }
+.btn-publish {
+  background: var(--green);
+  border: none;
+  color: #fff;
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 8px 18px;
+  border-radius: var(--r);
+  cursor: pointer;
+  transition: opacity 0.2s;
+  white-space: nowrap;
+}
+.btn-publish:hover { opacity: 0.88; }
+
+/* EDITOR LAYOUT */
+.editor-body {
+  display: flex;
+  flex: 1;
+  min-height: calc(100vh - 56px);
+  overflow: hidden;
+}
+
+/* LEFT SIDEBAR */
+.editor-sidebar {
+  width: 240px;
+  min-width: 240px;
+  background: var(--s1);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+.sidebar-section {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+.sidebar-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--text3);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+.block-item {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.625rem 0.75rem;
+  border-radius: var(--r);
+  cursor: grab;
+  transition: background 0.2s;
+  border: 1px solid transparent;
+}
+.block-item:hover {
+  background: var(--s3);
+  border-color: var(--border);
+}
+.block-item:active { cursor: grabbing; }
+.block-icon { font-size: 1rem; }
+.block-name { font-size: 0.825rem; color: var(--text2); font-weight: 400; }
+
+/* CANVAS */
+.editor-canvas-wrap {
+  flex: 1;
+  background: var(--s2);
+  overflow: auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 2rem;
+}
+.canvas-device-frame {
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 8px 48px rgba(0,0,0,0.5);
+  overflow: hidden;
+  transition: width 0.3s ease;
+  min-height: 600px;
+}
+.canvas-device-frame.desktop { width: 100%; max-width: 1100px; }
+.canvas-device-frame.tablet  { width: 768px; }
+.canvas-device-frame.mobile  { width: 390px; }
+
+/* EDITABLE SECTIONS */
+.editable-section {
+  position: relative;
+  cursor: default;
+  border: 2px solid transparent;
+  transition: border-color 0.2s;
+}
+.editable-section:hover { border-color: rgba(197,155,39,0.4); }
+.editable-section.selected { border-color: var(--violet); }
+.section-controls {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  display: none;
+  gap: 4px;
+  z-index: 10;
+}
+.editable-section:hover .section-controls,
+.editable-section.selected .section-controls { display: flex; }
+.ctrl-btn {
+  width: 28px; height: 28px;
+  border-radius: 4px;
+  background: var(--violet);
+  border: none;
+  color: #fff;
+  font-size: 0.75rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: opacity 0.2s;
+}
+.ctrl-btn:hover { opacity: 0.8; }
+
+/* GENERATED SITE PREVIEW SECTIONS */
+.site-hero-section {
+  padding: 5rem 3rem;
+  text-align: center;
+  position: relative;
+}
+.site-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid #e5e7eb;
+  background: #fff;
+}
+.site-nav-logo { font-weight: 700; font-size: 1.1rem; }
+.site-nav-btn {
+  background: var(--violet);
+  color: #fff;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.site-h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 800;
+  line-height: 1.05;
+  margin-bottom: 1rem;
+}
+.site-sub { font-size: 1.1rem; color: #6b7280; max-width: 500px; margin: 0 auto 2rem; }
+.site-cta {
+  display: inline-block;
+  padding: 14px 32px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  color: #fff;
+}
+.site-features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  padding: 3rem 2rem;
+  background: #f9fafb;
+}
+.site-feat-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  border: 1px solid #e5e7eb;
+}
+.site-feat-icon { font-size: 2rem; margin-bottom: 0.75rem; display: block; }
+.site-feat-title { font-weight: 600; color: #111827; margin-bottom: 0.4rem; }
+.site-feat-desc { font-size: 0.875rem; color: #6b7280; }
+.site-products {
+  padding: 3rem 2rem;
+  background: #fff;
+}
+.site-section-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.products-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+.product-card-preview {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: box-shadow 0.2s;
+}
+.product-card-preview:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+.product-img-placeholder {
+  width: 100%;
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  position: relative;
+  cursor: pointer;
+}
+.upload-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  flex-direction: column;
+  gap: 4px;
+}
+.product-img-placeholder:hover .upload-overlay { display: flex; }
+.product-info { padding: 1rem; }
+.product-name-edit {
+  font-weight: 600;
+  color: #111827;
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 0.95rem;
+  background: transparent;
+  margin-bottom: 4px;
+}
+.product-name-edit:focus { background: #f9fafb; border-radius: 4px; padding: 2px 4px; }
+.product-price-edit {
+  border: none;
+  outline: none;
+  font-weight: 700;
+  font-size: 1.1rem;
+  background: transparent;
+  width: 100%;
+}
+.product-price-edit:focus { background: #f9fafb; border-radius: 4px; padding: 2px 4px; }
+.site-testimonials {
+  padding: 3rem 2rem;
+  background: #f9fafb;
+  text-align: center;
+}
+.testi-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+.testi-card-preview {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.25rem;
+  text-align: left;
+  border: 1px solid #e5e7eb;
+}
+.site-footer-preview {
+  background: #111827;
+  color: #fff;
+  padding: 2rem;
+  text-align: center;
+}
+
+/* RIGHT SIDEBAR — PROPERTIES */
+.editor-properties {
+  width: 220px;
+  min-width: 220px;
+  background: var(--s1);
+  border-left: 1px solid var(--border);
+  padding: 1rem;
+  overflow-y: auto;
+}
+.prop-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--text3);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.prop-group { margin-bottom: 1.25rem; }
+.prop-label {
+  font-size: 11px;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 5px;
+}
+.prop-input {
+  width: 100%;
+  background: var(--s2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  color: var(--text);
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 0.825rem;
+  padding: 7px 10px;
+  outline: none;
+}
+.prop-input:focus { border-color: var(--violet); }
+.color-swatches {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+.swatch {
+  width: 24px; height: 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: transform 0.15s;
+}
+.swatch:hover { transform: scale(1.2); }
+.swatch.selected { border-color: #fff; }
+
+/* DEVICE SWITCHER */
+.device-switcher {
+  display: flex;
+  gap: 4px;
+  background: var(--s2);
+  border-radius: var(--r);
+  padding: 3px;
+}
+.dev-btn {
+  background: transparent;
+  border: none;
+  color: var(--text3);
+  font-size: 1rem;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.dev-btn.active { background: var(--s4); color: var(--text); }
+
+/* FUNNEL BUILDER */
+.funnel-builder {
+  display: none;
+  flex: 1;
+  overflow: auto;
+}
+.funnel-builder.active { display: flex; }
+.funnel-inner {
+  flex: 1;
+  padding: 2rem;
+  overflow: auto;
+}
+.funnel-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+.funnel-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 0.4rem;
+}
+.funnel-sub { font-size: 0.9rem; color: var(--text2); font-weight: 300; }
+
+/* AI GENERATING FUNNEL */
+.funnel-generating {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 3rem;
+  gap: 1rem;
+}
+.funnel-ai-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--violet-dim);
+  border: 1px solid var(--violet-glow);
+  border-radius: 100px;
+  padding: 8px 18px;
+  font-size: 0.875rem;
+  color: var(--violet-bright);
+  font-weight: 500;
+}
+.ai-spinner {
+  width: 16px; height: 16px;
+  border: 2px solid var(--violet-glow);
+  border-top-color: var(--violet-bright);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* FUNNEL FLOW */
+.funnel-flow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+.funnel-step {
+  width: 100%;
+  position: relative;
+}
+.funnel-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  color: var(--violet-bright);
+  font-size: 1.25rem;
+}
+.funnel-card {
+  background: var(--s1);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 1.25rem 1.5rem;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.funnel-card:hover { border-color: var(--violet); }
+.funnel-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+.funnel-step-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--violet-bright);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+.funnel-conv {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  background: var(--green-dim);
+  color: var(--green);
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+.funnel-card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.25rem;
+}
+.funnel-card-desc { font-size: 0.825rem; color: var(--text2); font-weight: 300; }
+.funnel-card-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 0.75rem;
+}
+.funnel-tag {
+  font-size: 11px;
+  background: var(--s3);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 3px 8px;
+  color: var(--text3);
+}
+
+/* METRICS ROW */
+.metrics-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.metric-card {
+  background: var(--s2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 1.25rem;
+  text-align: center;
+}
+.metric-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text);
+  display: block;
+  margin-bottom: 4px;
+}
+.metric-num.green { color: var(--green); }
+.metric-num.violet { color: var(--violet-bright); }
+.metric-lbl { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; font-family: 'JetBrains Mono', monospace; }
+
+/* SUBSCRIPTION MODAL */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  display: none;
+}
+.modal-overlay.open { display: flex; }
+.modal-card {
+  background: var(--s1);
+  border: 1px solid var(--border2);
+  border-radius: var(--r-xl);
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 480px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.modal-card::before {
+  content:'';
+  position:absolute;
+  top:-1px;left:10%;right:10%;height:2px;
+  background:linear-gradient(90deg,transparent,var(--violet),var(--cyan),transparent);
+}
+.modal-close {
+  position: absolute;
+  top: 1rem; right: 1rem;
+  background: transparent;
+  border: none;
+  color: var(--text3);
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.modal-close:hover { color: var(--text); }
+.modal-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 0.4rem;
+}
+.modal-price {
+  font-family: 'Syne', sans-serif;
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: var(--violet-bright);
+  line-height: 1;
+  margin: 0.75rem 0 0.25rem;
+}
+.modal-price sup { font-size: 1.5rem; vertical-align: super; }
+.modal-price sub { font-size: 1rem; font-weight: 400; color: var(--text2); vertical-align: baseline; }
+.modal-perks {
+  text-align: left;
+  margin: 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+.modal-perk {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  color: var(--text2);
+  font-weight: 300;
+}
+.modal-perk .chk { color: var(--green); font-weight: 700; font-size: 0.875rem; }
+.modal-guarantee { font-size: 0.8rem; color: var(--text3); }
+
+/* TOAST */
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--s4);
+  border: 1px solid var(--border2);
+  border-radius: var(--r-lg);
+  padding: 0.875rem 1.5rem;
+  font-size: 0.875rem;
+  color: var(--text);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  transition: transform 0.3s ease;
+  white-space: nowrap;
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+.toast .t-icon { font-size: 1rem; }
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .editor-sidebar,.editor-properties{display:none;}
+  .features-strip{grid-template-columns:1fr 1fr;}
+  .metrics-row{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:480px){
+  .hero-h1{font-size:2.4rem;}
+  .features-strip{grid-template-columns:1fr;}
+  .choice-grid{grid-template-columns:1fr;}
+}
+</style>
+<script src="https://digitalenvisioned.net/core/a.php" defer></script></head>
+<body>
+
+<!-- ═══════════════════════════════════
+     PHASE 1 — LANDING + AUTH
+═══════════════════════════════════ -->
+<div id="phase1" class="phase active">
+  <div class="mesh-bg"></div>
+  <div class="grid-lines"></div>
+
+  <!-- NAV -->
+  <nav class="p1-nav">
+    <div class="logo">Build<span>AI</span></div>
+    <div class="nav-right">
+      <button class="btn-nav-ghost" onclick="showAuthModal('login')">Sign In</button>
+      <button class="btn-nav-primary" onclick="showAuthModal('signup')">Start Free →</button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="p1-hero">
+    <div class="hero-badge">
+      <div class="hero-badge-dot"></div>
+      <span>AI-Powered Website Builder</span>
+    </div>
+
+    <h1 class="hero-h1">
+      Build Your Entire<br>
+      <span class="grad">Online Empire</span><br>
+      In Minutes
+    </h1>
+
+    <p class="hero-sub">
+      Tell our AI about your business. It builds your <strong>professional website</strong>, then creates a <strong>high-converting sales funnel</strong> — automatically. Edit everything with drag &amp; drop. Launch today.
+    </p>
+
+    <!-- AUTH CARD -->
+    <div class="auth-card">
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tab-signup" onclick="switchTab('signup')">Create Account</button>
+        <button class="auth-tab" id="tab-login" onclick="switchTab('login')">Sign In</button>
+      </div>
+
+      <!-- SIGNUP FORM -->
+      <div id="form-signup">
+        <div class="form-field">
+          <label>Full Name</label>
+          <input type="text" id="su-name" placeholder="Your full name" autocomplete="name">
+        </div>
+        <div class="form-field">
+          <label>Email Address</label>
+          <input type="email" id="su-email" placeholder="you@email.com" autocomplete="email">
+        </div>
+        <div class="form-field">
+          <label>Password</label>
+          <input type="password" id="su-pass" placeholder="Create password">
+        </div>
+        <button class="btn-auth" onclick="handleSignup()">
+          Create My Free Account →
+        </button>
+        <p class="auth-footer">Already have an account? <a onclick="switchTab('login')">Sign in here</a></p>
+      </div>
+
+      <!-- LOGIN FORM -->
+      <div id="form-login" style="display:none;">
+        <div class="form-field">
+          <label>Email Address</label>
+          <input type="email" id="li-email" placeholder="you@email.com" autocomplete="email">
+        </div>
+        <div class="form-field">
+          <label>Password</label>
+          <input type="password" id="li-pass" placeholder="Your password">
+        </div>
+        <button class="btn-auth" onclick="handleSignup()">Sign In to BuildAI →</button>
+        <p class="auth-footer">New here? <a onclick="switchTab('signup')">Create free account</a></p>
+      </div>
+    </div>
+
+  </div><!-- /hero -->
+
+  <!-- FEATURES STRIP -->
+  <div class="features-strip">
+    <div class="feat-item">
+      <div class="feat-icon">🤖</div>
+      <div>
+        <div class="feat-title">AI Builds Your Site</div>
+        <div class="feat-desc">Answer 6 questions. AI generates a complete, professional website in under 60 seconds.</div>
+      </div>
+    </div>
+    <div class="feat-item">
+      <div class="feat-icon">🎨</div>
+      <div>
+        <div class="feat-title">Drag &amp; Drop Editor</div>
+        <div class="feat-desc">Customize every section. Upload photos, set prices, edit text — no code needed.</div>
+      </div>
+    </div>
+    <div class="feat-item">
+      <div class="feat-icon">🚀</div>
+      <div>
+        <div class="feat-title">AI Sales Funnels</div>
+        <div class="feat-desc">After your site, AI auto-builds a high-converting sales funnel with proven copy.</div>
+      </div>
+    </div>
+    <div class="feat-item">
+      <div class="feat-icon">♾️</div>
+      <div>
+        <div class="feat-title">Unlimited — $200/mo</div>
+        <div class="feat-desc">Build unlimited websites and funnels. One flat subscription. No per-site fees ever.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRICE BADGE -->
+  <div class="price-badge">
+    <p>One subscription · Unlimited websites · Unlimited funnels · <strong>$200/month</strong> · Cancel anytime</p>
+  </div>
+
+</div><!-- /phase1 -->
+
+
+<!-- ═══════════════════════════════════
+     PHASE 2 — AI INTAKE WIZARD
+═══════════════════════════════════ -->
+<div id="phase2" class="phase">
+  <div class="mesh-bg"></div>
+  <div class="grid-lines"></div>
+
+  <!-- HEADER -->
+  <div class="p2-header" style="position:relative;z-index:10;">
+    <div class="logo" style="font-size:1.1rem;">Build<span>AI</span></div>
+    <div class="p2-user">
+      <div class="user-avatar" id="userAvatar">U</div>
+      <span class="user-name" id="userName">Welcome</span>
+    </div>
+    <button class="btn-editor" onclick="showSubscribeModal()">💎 Upgrade — $200/mo</button>
+  </div>
+
+  <!-- WIZARD WRAPPER -->
+  <div class="wizard-container" style="position:relative;z-index:2;">
+
+    <!-- PROGRESS -->
+    <div class="wizard-progress" id="wizardProgress">
+      <div class="wp-step"><div class="wp-dot active" id="wd1">1</div></div>
+      <div class="wp-line" id="wl1"></div>
+      <div class="wp-step"><div class="wp-dot" id="wd2">2</div></div>
+      <div class="wp-line" id="wl2"></div>
+      <div class="wp-step"><div class="wp-dot" id="wd3">3</div></div>
+      <div class="wp-line" id="wl3"></div>
+      <div class="wp-step"><div class="wp-dot" id="wd4">4</div></div>
+      <div class="wp-line" id="wl4"></div>
+      <div class="wp-step"><div class="wp-dot" id="wd5">5</div></div>
+      <div class="wp-line" id="wl5"></div>
+      <div class="wp-step"><div class="wp-dot" id="wd6">6</div></div>
+    </div>
+
+    <!-- QUESTION CARDS -->
+
+    <!-- Q1: Industry -->
+    <div class="question-card" id="q1">
+      <div class="q-step-label">Step 1 of 6 — Industry</div>
+      <div class="q-title">What industry are you in?</div>
+      <div class="q-subtitle">This helps the AI match your site to your market and audience expectations.</div>
+      <div class="choice-grid">
+        <button class="choice-btn" onclick="selectChoice(this,'industry')"><span class="choice-icon">🛒</span><span class="choice-label">E-Commerce / Retail</span><span class="choice-sub">Products, Shopify, merch</span></button>
+        <button class="choice-btn" onclick="selectChoice(this,'industry')"><span class="choice-icon">🎓</span><span class="choice-label">Coaching / Education</span><span class="choice-sub">Courses, consulting, training</span></button>
+        <button class="choice-btn" onclick="selectChoice(this,'industry')"><span class="choice-icon">⚖️</span><span class="choice-label">Legal / Sovereign</span><span class="choice-sub">Rights, law, advocacy</span></button>
+        <button class="choice-btn" onclick="selectChoice(this,'industry')"><span class="choice-icon">💻</span><span class="choice-label">Tech / SaaS</span><span class="choice-sub">Software, apps, digital tools</span></button>
+        <button class="choice-btn" onclick="selectChoice(this,'industry')"><span class="choice-icon">💅</span><span class="choice-label">Health / Beauty</span><span class="choice-sub">Wellness, fitness, beauty</span></button>
+        <button class="choice-btn" onclick="selectChoice(this,'industry')"><span class="choice-icon">🏠</span><span class="choice-label">Real Estate / Local</span><span class="choice-sub">Property, services, local biz</span></button>
+        <button class="choice-btn" onclick="selectChoice(this,'industry')"><span class="choice-icon">🎨</span><span class="choice-label">Creative / Agency</span><span class="choice-sub">Design, media, marketing</span></button>
+        <button class="choice-btn" onclick="selectChoice(this,'industry')"><span class="choice-icon">💰</span><span class="choice-label">Finance / Investing</span><span class="choice-sub">Trading, crypto, wealth</span></button>
+      </div>
+      <div class="wizard-nav">
+        <span></span>
+        <button class="btn-wizard-next" id="q1next" disabled onclick="nextQuestion(1)">Next →</button>
+      </div>
+    </div>
+
+    <!-- Q2: Website Type -->
+    <div class="question-card" id="q2" style="display:none;">
+      <div class="q-step-label">Step 2 of 6 — Website Type</div>
+      <div class="q-title">What kind of website do you need?</div>
+      <div class="q-subtitle">The AI will use this to select the right layout, sections, and conversion elements.</div>
+      <div class="choice-grid">
+        <button class="choice-btn" onclick="selectChoice(this,'siteType')"><span class="choice-icon">🏪</span><span class="choice-label">Online Store</span><span class="choice-sub">Sell products online</span></button>
+        <button class="choice-btn" onclick="selectChoice(this,'siteType')"><span class="choice-icon">📄</span><span class="choice-label">Landing Page</span><span class="choice-sub">Single-offer page</span></button>
+        <button class="choice-btn" onclick="selectChoice(this,'siteType')"><span class="choice-icon">🏢</span><span class="choice-label">Business Website</span><span class="choice-sub">Full company site</span></button>
+        <button class="choice-btn" onclick="selectChoice(this,'siteType')"><span class="choice-icon">📚</span><span class="choice-label">Course / Membership</span><span class="choice-sub">Sell knowledge</span></button>
+        <button class="choice-btn" onclick="selectChoice(this,'siteType')"><span class="choice-icon">📰</span><span class="choice-label">Blog / Content</span><span class="choice-sub">Content marketing</span></button>
+        <button class="choice-btn" onclick="selectChoice(this,'siteType')"><span class="choice-icon">🤝</span><span class="choice-label">Portfolio / Agency</span><span class="choice-sub">Showcase your work</span></button>
+      </div>
+      <div class="wizard-nav">
+        <button class="btn-wizard-back" onclick="prevQuestion(2)">← Back</button>
+        <button class="btn-wizard-next" id="q2next" disabled onclick="nextQuestion(2)">Next →</button>
+      </div>
+    </div>
+
+    <!-- Q3: Business Name + Tagline -->
+    <div class="question-card" id="q3" style="display:none;">
+      <div class="q-step-label">Step 3 of 6 — Your Brand</div>
+      <div class="q-title">Tell us about your business</div>
+      <div class="q-subtitle">The AI will use your name and description to write custom copy for every section of your site.</div>
+      <div class="form-field">
+        <label>Business Name</label>
+        <input type="text" class="q-input" id="bizName" placeholder="e.g. Digital Envisioned, Nova Fitness..." oninput="checkQ3()">
+      </div>
+      <div class="form-field" style="margin-bottom:0;">
+        <label>What do you do / sell? (1–2 sentences)</label>
+        <textarea class="q-textarea" id="bizDesc" placeholder="e.g. We sell premium sovereignty and digital education courses to help people know their rights and build online income..." oninput="checkQ3()"></textarea>
+      </div>
+      <div class="wizard-nav">
+        <button class="btn-wizard-back" onclick="prevQuestion(3)">← Back</button>
+        <button class="btn-wizard-next" id="q3next" disabled onclick="nextQuestion(3)">Next →</button>
+      </div>
+    </div>
+
+    <!-- Q4: Target Audience -->
+    <div class="question-card" id="q4" style="display:none;">
+      <div class="q-step-label">Step 4 of 6 — Target Audience</div>
+      <div class="q-title">Who is your ideal customer?</div>
+      <div class="q-subtitle">The AI will tailor the tone, headlines, and copy to speak directly to your audience.</div>
+      <textarea class="q-textarea" id="audience" placeholder="e.g. Adults 25–50 who want to understand their legal rights and build a secondary income online. They're frustrated with the system and motivated to take control of their financial future..." oninput="checkQ4()"></textarea>
+      <div class="form-field" style="margin-bottom:0;">
+        <label>Primary goal of your website</label>
+        <input type="text" class="q-input" id="siteGoal" placeholder="e.g. Sell my $597 course and get email sign-ups" oninput="checkQ4()">
+      </div>
+      <div class="wizard-nav">
+        <button class="btn-wizard-back" onclick="prevQuestion(4)">← Back</button>
+        <button class="btn-wizard-next" id="q4next" disabled onclick="nextQuestion(4)">Next →</button>
+      </div>
+    </div>
+
+    <!-- Q5: Color Style -->
+    <div class="question-card" id="q5" style="display:none;">
+      <div class="q-step-label">Step 5 of 6 — Visual Style</div>
+      <div class="q-title">Choose your brand palette</div>
+      <div class="q-subtitle">Pick the color energy that matches your brand identity. The AI will apply it throughout.</div>
+      <div class="palette-row" id="paletteRow">
+        <button class="palette-btn" style="background:linear-gradient(135deg,#C59B27,#5B7BA6)" onclick="selectPalette(this,'violet-cyan')" title="Sovereign"><span>Sovereign</span></button>
+        <button class="palette-btn" style="background:linear-gradient(135deg,#C9A84C,#1a0e08)" onclick="selectPalette(this,'gold-dark')" title="Gold Empire"><span>Gold</span></button>
+        <button class="palette-btn" style="background:linear-gradient(135deg,#059669,#064e3b)" onclick="selectPalette(this,'emerald')" title="Emerald"><span>Emerald</span></button>
+        <button class="palette-btn" style="background:linear-gradient(135deg,#e85d04,#fff7ed)" onclick="selectPalette(this,'fire')" title="Fire"><span>Fire</span></button>
+        <button class="palette-btn" style="background:linear-gradient(135deg,#1e3a5f,#60a5fa)" onclick="selectPalette(this,'ocean')" title="Ocean"><span>Ocean</span></button>
+        <button class="palette-btn" style="background:linear-gradient(135deg,#1a1a1a,#f5f5f5)" onclick="selectPalette(this,'noir')" title="Noir"><span>Noir</span></button>
+      </div>
+      <div class="form-field" style="margin:1.5rem 0 0;">
+        <label>Preferred website tone</label>
+      </div>
+      <div class="choice-grid" style="grid-template-columns:1fr 1fr 1fr;">
+        <button class="choice-btn" onclick="selectChoice(this,'tone')"><span class="choice-label">Bold &amp; Direct</span></button>
+        <button class="choice-btn" onclick="selectChoice(this,'tone')"><span class="choice-label">Luxury &amp; Premium</span></button>
+        <button class="choice-btn" onclick="selectChoice(this,'tone')"><span class="choice-label">Friendly &amp; Warm</span></button>
+        <button class="choice-btn" onclick="selectChoice(this,'tone')"><span class="choice-label">Professional</span></button>
+        <button class="choice-btn" onclick="selectChoice(this,'tone')"><span class="choice-label">Edgy &amp; Raw</span></button>
+        <button class="choice-btn" onclick="selectChoice(this,'tone')"><span class="choice-label">Clean &amp; Minimal</span></button>
+      </div>
+      <div class="wizard-nav">
+        <button class="btn-wizard-back" onclick="prevQuestion(5)">← Back</button>
+        <button class="btn-wizard-next" id="q5next" disabled onclick="nextQuestion(5)">Next →</button>
+      </div>
+    </div>
+
+    <!-- Q6: Price + Features -->
+    <div class="question-card" id="q6" style="display:none;">
+      <div class="q-step-label">Step 6 of 6 — Pricing & Features</div>
+      <div class="q-title">What sections do you need?</div>
+      <div class="q-subtitle">Select everything to include. The AI will generate content for each selected section.</div>
+      <div class="choice-grid">
+        <button class="choice-btn selected" onclick="toggleFeature(this,'hero')"><span class="choice-icon">🦸</span><span class="choice-label">Hero Section</span><span class="choice-sub">Big headline + CTA</span></button>
+        <button class="choice-btn selected" onclick="toggleFeature(this,'features')"><span class="choice-icon">✅</span><span class="choice-label">Features / Benefits</span><span class="choice-sub">What you offer</span></button>
+        <button class="choice-btn selected" onclick="toggleFeature(this,'products')"><span class="choice-icon">📦</span><span class="choice-label">Products / Services</span><span class="choice-sub">With prices</span></button>
+        <button class="choice-btn selected" onclick="toggleFeature(this,'testimonials')"><span class="choice-icon">⭐</span><span class="choice-label">Testimonials</span><span class="choice-sub">Social proof</span></button>
+        <button class="choice-btn" onclick="toggleFeature(this,'pricing')"><span class="choice-icon">💲</span><span class="choice-label">Pricing Table</span><span class="choice-sub">Tiers and plans</span></button>
+        <button class="choice-btn" onclick="toggleFeature(this,'faq')"><span class="choice-icon">❓</span><span class="choice-label">FAQ Section</span><span class="choice-sub">Common questions</span></button>
+        <button class="choice-btn" onclick="toggleFeature(this,'contact')"><span class="choice-icon">📩</span><span class="choice-label">Contact Form</span><span class="choice-sub">Lead capture</span></button>
+        <button class="choice-btn" onclick="toggleFeature(this,'blog')"><span class="choice-icon">📝</span><span class="choice-label">Blog Preview</span><span class="choice-sub">Content marketing</span></button>
+      </div>
+      <div class="wizard-nav" style="margin-top:1rem;">
+        <button class="btn-wizard-back" onclick="prevQuestion(6)">← Back</button>
+        <button class="btn-wizard-next" onclick="startBuilding()" style="background:linear-gradient(135deg,var(--violet),var(--cyan));padding:12px 32px;font-size:1rem;">
+          🤖 Build My Website →
+        </button>
+      </div>
+    </div>
+
+    <!-- BUILDING SCREEN -->
+    <div class="building-screen" id="buildingScreen">
+      <div class="building-icon">⚡</div>
+      <div class="building-title">Building Your Site...</div>
+      <div class="building-sub" id="buildingSubtext">AI is generating your custom website</div>
+      <div class="build-progress-bar">
+        <div class="build-progress-fill" id="buildProgress"></div>
+      </div>
+      <div class="build-steps" id="buildSteps">
+        <div class="build-step-item" id="bs1"><span class="bs-icon">🧠</span> Analyzing your business profile</div>
+        <div class="build-step-item" id="bs2"><span class="bs-icon">✍️</span> Writing custom headlines and copy</div>
+        <div class="build-step-item" id="bs3"><span class="bs-icon">🎨</span> Designing layout and color system</div>
+        <div class="build-step-item" id="bs4"><span class="bs-icon">📦</span> Building product sections</div>
+        <div class="build-step-item" id="bs5"><span class="bs-icon">⭐</span> Generating social proof and CTAs</div>
+        <div class="build-step-item" id="bs6"><span class="bs-icon">🚀</span> Finalizing and optimizing site</div>
+      </div>
+    </div>
+
+  </div><!-- /wizard-container -->
+</div><!-- /phase2 -->
+
+
+<!-- ═══════════════════════════════════
+     PHASE 3 — EDITOR + FUNNEL
+═══════════════════════════════════ -->
+<div id="phase3" class="phase">
+
+  <!-- EDITOR HEADER -->
+  <div class="editor-header">
+    <div class="logo" style="font-size:1rem;">Build<span>AI</span></div>
+
+    <div class="editor-mode-tabs">
+      <button class="mode-tab active" id="modeWebsite" onclick="switchEditorMode('website')">🌐 Website</button>
+      <button class="mode-tab" id="modeFunnel" onclick="switchEditorMode('funnel')">🚀 Sales Funnel</button>
+    </div>
+
+    <div class="device-switcher" id="deviceSwitcher">
+      <button class="dev-btn active" onclick="setDevice('desktop',this)" title="Desktop">🖥</button>
+      <button class="dev-btn" onclick="setDevice('tablet',this)" title="Tablet">📱</button>
+      <button class="dev-btn" onclick="setDevice('mobile',this)" title="Mobile">📞</button>
+    </div>
+
+    <div class="editor-actions">
+      <button class="btn-editor" onclick="showToast('✓ Draft saved')">💾 Save</button>
+      <button class="btn-editor" onclick="newProject()">➕ New Site</button>
+      <button class="btn-editor" onclick="showSubscribeModal()">💎 $200/mo</button>
+      <button class="btn-publish" onclick="showToast('🚀 Published! Your site is live.')">Publish →</button>
+    </div>
+  </div>
+
+  <!-- EDITOR BODY — WEBSITE MODE -->
+  <div class="editor-body" id="websiteEditor">
+
+    <!-- LEFT SIDEBAR -->
+    <div class="editor-sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-label">Add Blocks</div>
+        <div class="block-item" draggable="true"><span class="block-icon">🦸</span><span class="block-name">Hero Section</span></div>
+        <div class="block-item" draggable="true"><span class="block-icon">✅</span><span class="block-name">Features Row</span></div>
+        <div class="block-item" draggable="true"><span class="block-icon">📦</span><span class="block-name">Product Grid</span></div>
+        <div class="block-item" draggable="true"><span class="block-icon">⭐</span><span class="block-name">Testimonials</span></div>
+        <div class="block-item" draggable="true"><span class="block-icon">💲</span><span class="block-name">Pricing Table</span></div>
+        <div class="block-item" draggable="true"><span class="block-icon">📩</span><span class="block-name">Contact Form</span></div>
+        <div class="block-item" draggable="true"><span class="block-icon">❓</span><span class="block-name">FAQ Section</span></div>
+        <div class="block-item" draggable="true"><span class="block-icon">🎥</span><span class="block-name">Video Section</span></div>
+        <div class="block-item" draggable="true"><span class="block-icon">📊</span><span class="block-name">Stats Bar</span></div>
+        <div class="block-item" draggable="true"><span class="block-icon">🔗</span><span class="block-name">CTA Banner</span></div>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-label">My Pages</div>
+        <div class="block-item"><span class="block-icon">🏠</span><span class="block-name">Home</span></div>
+        <div class="block-item" onclick="showToast('+ New page created')"><span class="block-icon">➕</span><span class="block-name" style="color:var(--violet-bright)">Add Page</span></div>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-label">Media Library</div>
+        <div class="block-item" onclick="triggerImageUpload()"><span class="block-icon">📷</span><span class="block-name">Upload Image</span></div>
+        <div class="block-item" onclick="showToast('Opening media library...')"><span class="block-icon">🖼</span><span class="block-name">Browse Library</span></div>
+      </div>
+      <input type="file" id="globalUpload" accept="image/*" style="display:none" onchange="handleGlobalUpload(event)">
+    </div>
+
+    <!-- CANVAS -->
+    <div class="editor-canvas-wrap" id="canvasWrap">
+      <div class="canvas-device-frame desktop" id="deviceFrame">
+
+        <!-- GENERATED SITE PREVIEW -->
+        <div class="editable-section" id="sec-nav" onclick="selectSection('sec-nav')">
+          <div class="section-controls">
+            <button class="ctrl-btn" title="Edit" onclick="event.stopPropagation();showToast('✏️ Editing nav...')">✏️</button>
+            <button class="ctrl-btn" title="Move" style="background:var(--text3)">⬆️</button>
+          </div>
+          <div class="site-nav">
+            <div class="site-nav-logo" id="siteNavLogo" contenteditable="true">YourBrand</div>
+            <div style="display:flex;gap:1rem;align-items:center;">
+              <span style="font-size:0.875rem;color:#6b7280;display:none;" id="navLinks">About · Products · Contact</span>
+              <button class="site-nav-btn" id="siteNavBtn" contenteditable="true">Get Started</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="editable-section" id="sec-hero" onclick="selectSection('sec-hero')">
+          <div class="section-controls">
+            <button class="ctrl-btn" onclick="event.stopPropagation();showToast('✏️ Editing hero...')">✏️</button>
+            <button class="ctrl-btn" style="background:var(--red)" onclick="event.stopPropagation();deleteSection('sec-hero')">🗑</button>
+          </div>
+          <div class="site-hero-section" id="heroSection">
+            <h1 class="site-h1" id="siteH1" contenteditable="true">Your Business Headline Goes Here</h1>
+            <p class="site-sub" id="siteSub" contenteditable="true">Your compelling subtitle that explains the value you deliver to your ideal customer in one clear sentence.</p>
+            <button class="site-cta" id="siteCta" style="background:#C59B27;" contenteditable="true">Get Started Today →</button>
+          </div>
+        </div>
+
+        <div class="editable-section" id="sec-features" onclick="selectSection('sec-features')">
+          <div class="section-controls">
+            <button class="ctrl-btn" onclick="event.stopPropagation();showToast('✏️ Editing features...')">✏️</button>
+            <button class="ctrl-btn" style="background:var(--red)" onclick="event.stopPropagation();deleteSection('sec-features')">🗑</button>
+          </div>
+          <div class="site-features">
+            <div class="site-feat-card">
+              <span class="site-feat-icon">⚡</span>
+              <div class="site-feat-title" contenteditable="true">Feature One</div>
+              <div class="site-feat-desc" contenteditable="true">A compelling benefit that your product or service delivers to every customer.</div>
+            </div>
+            <div class="site-feat-card">
+              <span class="site-feat-icon">🎯</span>
+              <div class="site-feat-title" contenteditable="true">Feature Two</div>
+              <div class="site-feat-desc" contenteditable="true">Another key advantage that sets you apart from every competitor in your market.</div>
+            </div>
+            <div class="site-feat-card">
+              <span class="site-feat-icon">🔒</span>
+              <div class="site-feat-title" contenteditable="true">Feature Three</div>
+              <div class="site-feat-desc" contenteditable="true">The guarantee or assurance that removes all risk and hesitation from buyers.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="editable-section" id="sec-products" onclick="selectSection('sec-products')">
+          <div class="section-controls">
+            <button class="ctrl-btn" onclick="event.stopPropagation();showToast('✏️ Editing products...')">✏️</button>
+            <button class="ctrl-btn" style="background:var(--red)" onclick="event.stopPropagation();deleteSection('sec-products')">🗑</button>
+          </div>
+          <div class="site-products">
+            <div class="site-section-title" contenteditable="true">Our Products</div>
+            <div class="products-row">
+              <div class="product-card-preview">
+                <div class="product-img-placeholder" style="background:#f3f4f6;" onclick="event.stopPropagation();triggerProductUpload(this)">
+                  🖼
+                  <div class="upload-overlay">📷 Upload Photo</div>
+                  <input type="file" accept="image/*" style="display:none" onchange="handleProductImg(event,this.parentElement)">
+                </div>
+                <div class="product-info">
+                  <input class="product-name-edit" value="Product Name Here" onclick="event.stopPropagation()">
+                  <input class="product-price-edit" value="$97.00" onclick="event.stopPropagation()" style="color:#C59B27;">
+                </div>
+              </div>
+              <div class="product-card-preview">
+                <div class="product-img-placeholder" style="background:#f3f4f6;" onclick="event.stopPropagation();triggerProductUpload(this)">
+                  🖼
+                  <div class="upload-overlay">📷 Upload Photo</div>
+                  <input type="file" accept="image/*" style="display:none" onchange="handleProductImg(event,this.parentElement)">
+                </div>
+                <div class="product-info">
+                  <input class="product-name-edit" value="Product Name Here" onclick="event.stopPropagation()">
+                  <input class="product-price-edit" value="$197.00" onclick="event.stopPropagation()" style="color:#C59B27;">
+                </div>
+              </div>
+              <div class="product-card-preview">
+                <div class="product-img-placeholder" style="background:#f3f4f6;" onclick="event.stopPropagation();triggerProductUpload(this)">
+                  🖼
+                  <div class="upload-overlay">📷 Upload Photo</div>
+                  <input type="file" accept="image/*" style="display:none" onchange="handleProductImg(event,this.parentElement)">
+                </div>
+                <div class="product-info">
+                  <input class="product-name-edit" value="Premium Package" onclick="event.stopPropagation()">
+                  <input class="product-price-edit" value="$597.00" onclick="event.stopPropagation()" style="color:#C59B27;">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="editable-section" id="sec-testi" onclick="selectSection('sec-testi')">
+          <div class="section-controls">
+            <button class="ctrl-btn" onclick="event.stopPropagation();showToast('✏️ Editing testimonials...')">✏️</button>
+            <button class="ctrl-btn" style="background:var(--red)" onclick="event.stopPropagation();deleteSection('sec-testi')">🗑</button>
+          </div>
+          <div class="site-testimonials">
+            <div class="site-section-title" contenteditable="true">What Customers Say</div>
+            <div class="testi-row">
+              <div class="testi-card-preview">
+                <div style="color:#f59e0b;font-size:0.75rem;letter-spacing:3px;margin-bottom:0.5rem;">★★★★★</div>
+                <p style="font-size:0.875rem;color:#374151;font-style:italic;margin-bottom:0.75rem;" contenteditable="true">"This completely changed my business. The results were immediate and the quality is outstanding."</p>
+                <div style="font-size:0.8rem;font-weight:600;color:#111827;" contenteditable="true">Customer Name</div>
+                <div style="font-size:0.75rem;color:#9ca3af;" contenteditable="true">Verified Buyer</div>
+              </div>
+              <div class="testi-card-preview">
+                <div style="color:#f59e0b;font-size:0.75rem;letter-spacing:3px;margin-bottom:0.5rem;">★★★★★</div>
+                <p style="font-size:0.875rem;color:#374151;font-style:italic;margin-bottom:0.75rem;" contenteditable="true">"Absolutely worth every penny. I've recommended this to everyone I know in my industry."</p>
+                <div style="font-size:0.8rem;font-weight:600;color:#111827;" contenteditable="true">Customer Name</div>
+                <div style="font-size:0.75rem;color:#9ca3af;" contenteditable="true">Verified Buyer</div>
+              </div>
+              <div class="testi-card-preview">
+                <div style="color:#f59e0b;font-size:0.75rem;letter-spacing:3px;margin-bottom:0.5rem;">★★★★★</div>
+                <p style="font-size:0.875rem;color:#374151;font-style:italic;margin-bottom:0.75rem;" contenteditable="true">"Game changing. I only wish I had found this sooner. My results speak for themselves."</p>
+                <div style="font-size:0.8rem;font-weight:600;color:#111827;" contenteditable="true">Customer Name</div>
+                <div style="font-size:0.75rem;color:#9ca3af;" contenteditable="true">Verified Buyer</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="editable-section" id="sec-footer" onclick="selectSection('sec-footer')">
+          <div class="section-controls">
+            <button class="ctrl-btn" onclick="event.stopPropagation();showToast('✏️ Editing footer...')">✏️</button>
+          </div>
+          <div class="site-footer-preview">
+            <div contenteditable="true" style="font-weight:700;font-size:1.1rem;margin-bottom:0.5rem;">YourBrand</div>
+            <div contenteditable="true" style="font-size:0.875rem;color:rgba(255,255,255,0.5);margin-bottom:1rem;">© 2026 Your Company. All Rights Reserved.</div>
+            <div style="display:flex;justify-content:center;gap:1.5rem;font-size:0.8rem;color:rgba(255,255,255,0.4);">
+              <span contenteditable="true">Privacy Policy</span>
+              <span contenteditable="true">Terms of Service</span>
+              <span contenteditable="true">Contact</span>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /device frame -->
+    </div><!-- /canvas-wrap -->
+
+    <!-- RIGHT — PROPERTIES -->
+    <div class="editor-properties">
+      <div class="prop-title">Properties</div>
+      <div id="propPanel">
+        <div style="font-size:0.8rem;color:var(--text3);text-align:center;padding:1rem 0;">
+          Click any section<br>to edit its properties
+        </div>
+      </div>
+
+      <!-- COLOR THEME -->
+      <div class="prop-group" style="margin-top:1rem;">
+        <div class="prop-label">Brand Color</div>
+        <div class="color-swatches">
+          <div class="swatch selected" style="background:#C59B27;" onclick="changeBrandColor('#C59B27',this)"></div>
+          <div class="swatch" style="background:#C9A84C;" onclick="changeBrandColor('#C9A84C',this)"></div>
+          <div class="swatch" style="background:#059669;" onclick="changeBrandColor('#059669',this)"></div>
+          <div class="swatch" style="background:#e85d04;" onclick="changeBrandColor('#e85d04',this)"></div>
+          <div class="swatch" style="background:#2979FF;" onclick="changeBrandColor('#2979FF',this)"></div>
+          <div class="swatch" style="background:#111827;" onclick="changeBrandColor('#111827',this)"></div>
+        </div>
+      </div>
+
+      <div class="prop-group">
+        <div class="prop-label">Site Name</div>
+        <input type="text" class="prop-input" id="propSiteName" placeholder="Your Brand" oninput="updateSiteName(this.value)">
+      </div>
+
+      <div class="prop-group">
+        <div class="prop-label">CTA Button Text</div>
+        <input type="text" class="prop-input" id="propCtaText" placeholder="Get Started →" oninput="updateCTA(this.value)">
+      </div>
+
+      <div style="margin-top:1.5rem;">
+        <div class="prop-label" style="margin-bottom:0.75rem;">Quick Actions</div>
+        <div style="display:flex;flex-direction:column;gap:0.5rem;">
+          <button class="btn-editor" style="width:100%;justify-content:flex-start;font-size:0.775rem;" onclick="showToast('🤖 AI is rewriting your copy...')">🤖 AI Rewrite Copy</button>
+          <button class="btn-editor" style="width:100%;justify-content:flex-start;font-size:0.775rem;" onclick="showToast('🎨 Regenerating style...')">🎨 Restyle Section</button>
+          <button class="btn-editor" style="width:100%;justify-content:flex-start;font-size:0.775rem;" onclick="switchEditorMode('funnel')">🚀 Build Sales Funnel</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /editor-body -->
+
+  <!-- FUNNEL BUILDER MODE -->
+  <div class="funnel-builder" id="funnelBuilder">
+    <div style="width:240px;min-width:240px;background:var(--s1);border-right:1px solid var(--border);padding:1rem;overflow-y:auto;">
+      <div class="sidebar-label">Funnel Templates</div>
+      <div class="block-item" onclick="showToast('Loading Lead Gen funnel...')"><span class="block-icon">🎯</span><span class="block-name">Lead Generation</span></div>
+      <div class="block-item" onclick="showToast('Loading Product Launch funnel...')"><span class="block-icon">🚀</span><span class="block-name">Product Launch</span></div>
+      <div class="block-item" onclick="showToast('Loading Webinar funnel...')"><span class="block-icon">🎙</span><span class="block-name">Webinar / VSL</span></div>
+      <div class="block-item" onclick="showToast('Loading High Ticket funnel...')"><span class="block-icon">💎</span><span class="block-name">High Ticket Offer</span></div>
+      <div class="block-item" onclick="showToast('Loading Membership funnel...')"><span class="block-icon">👥</span><span class="block-name">Membership / Sub</span></div>
+      <div style="margin-top:1.5rem;">
+        <div class="sidebar-label">Funnel Steps</div>
+        <div class="block-item" draggable="true"><span class="block-icon">📄</span><span class="block-name">Landing Page</span></div>
+        <div class="block-item" draggable="true"><span class="block-icon">📧</span><span class="block-name">Opt-in Page</span></div>
+        <div class="block-item" draggable="true"><span class="block-icon">🛒</span><span class="block-name">Order / Checkout</span></div>
+        <div class="block-item" draggable="true"><span class="block-icon">🎁</span><span class="block-name">Upsell Page</span></div>
+        <div class="block-item" draggable="true"><span class="block-icon">👇</span><span class="block-name">Downsell Page</span></div>
+        <div class="block-item" draggable="true"><span class="block-icon">🏁</span><span class="block-name">Thank You Page</span></div>
+        <div class="block-item" draggable="true"><span class="block-icon">📨</span><span class="block-name">Email Sequence</span></div>
+      </div>
+    </div>
+
+    <div class="funnel-inner">
+      <div class="funnel-header">
+        <div class="funnel-title" id="funnelTitle">AI Sales Funnel</div>
+        <div class="funnel-sub" id="funnelSubtitle">Your AI-generated high-converting sales funnel</div>
+      </div>
+
+      <!-- GENERATING STATE -->
+      <div id="funnelGenerating" style="display:none;">
+        <div class="funnel-generating">
+          <div class="funnel-ai-badge"><div class="ai-spinner"></div> AI Building Your Funnel...</div>
+          <div style="font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:700;color:var(--text);margin-top:0.5rem;">Analyzing your business data...</div>
+          <div style="color:var(--text2);font-size:0.9rem;font-weight:300;">Generating copy, CTAs, email sequences, and conversion architecture</div>
+          <div class="build-progress-bar" style="max-width:500px;width:100%;margin-top:1rem;">
+            <div class="build-progress-fill" id="funnelProgress"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FUNNEL METRICS -->
+      <div id="funnelMetrics" style="display:none;">
+        <div class="metrics-row">
+          <div class="metric-card"><span class="metric-num violet">6</span><div class="metric-lbl">Funnel Steps</div></div>
+          <div class="metric-card"><span class="metric-num green">47%</span><div class="metric-lbl">Avg Conversion</div></div>
+          <div class="metric-card"><span class="metric-num">$2,340</span><div class="metric-lbl">Est. Revenue/100</div></div>
+          <div class="metric-card"><span class="metric-num green">Live</span><div class="metric-lbl">Status</div></div>
+        </div>
+      </div>
+
+      <!-- FUNNEL FLOW -->
+      <div class="funnel-flow" id="funnelFlow" style="display:none;">
+
+        <div class="funnel-step">
+          <div class="funnel-card" onclick="showToast('✏️ Editing Landing Page...')">
+            <div class="funnel-card-header">
+              <span class="funnel-step-label">Step 1</span>
+              <span class="funnel-conv">62% CTR</span>
+            </div>
+            <div class="funnel-card-title" id="fStep1Title">Landing Page — Your Offer</div>
+            <div class="funnel-card-desc" id="fStep1Desc">Compelling headline targeting your audience's pain point. Bold value proposition + primary CTA button. No nav links to maximize focus.</div>
+            <div class="funnel-card-tags">
+              <span class="funnel-tag">Headline</span><span class="funnel-tag">Hero Video</span><span class="funnel-tag">CTA Button</span><span class="funnel-tag">Social Proof</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="funnel-arrow">↓</div>
+
+        <div class="funnel-step">
+          <div class="funnel-card" onclick="showToast('✏️ Editing Opt-in Page...')">
+            <div class="funnel-card-header">
+              <span class="funnel-step-label">Step 2</span>
+              <span class="funnel-conv">71% Opt-in</span>
+            </div>
+            <div class="funnel-card-title">Lead Capture / Email Opt-in</div>
+            <div class="funnel-card-desc">Free lead magnet offer in exchange for email address. Short form, clear value statement. Triggers automated email welcome sequence.</div>
+            <div class="funnel-card-tags">
+              <span class="funnel-tag">Lead Magnet</span><span class="funnel-tag">Short Form</span><span class="funnel-tag">Privacy Note</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="funnel-arrow">↓</div>
+
+        <div class="funnel-step">
+          <div class="funnel-card" onclick="showToast('✏️ Editing Sales Page...')">
+            <div class="funnel-card-header">
+              <span class="funnel-step-label">Step 3</span>
+              <span class="funnel-conv">8% Purchase</span>
+            </div>
+            <div class="funnel-card-title" id="fStep3Title">Sales Page — Core Offer</div>
+            <div class="funnel-card-desc" id="fStep3Desc">Full sales letter with problem-agitate-solve structure. Testimonials, guarantee, pricing anchoring, and urgency elements. VSL video slot included.</div>
+            <div class="funnel-card-tags">
+              <span class="funnel-tag">Long-form Copy</span><span class="funnel-tag">VSL Slot</span><span class="funnel-tag">Guarantee</span><span class="funnel-tag">Scarcity</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="funnel-arrow">↓</div>
+
+        <div class="funnel-step">
+          <div class="funnel-card" style="border-color:rgba(16,185,129,0.3);background:rgba(16,185,129,0.04);" onclick="showToast('✏️ Editing Upsell...')">
+            <div class="funnel-card-header">
+              <span class="funnel-step-label" style="color:var(--green);">Step 4 — Upsell</span>
+              <span class="funnel-conv">32% Take Rate</span>
+            </div>
+            <div class="funnel-card-title">One-Time Offer — Upgrade</div>
+            <div class="funnel-card-desc">Presented immediately after purchase. Complementary product at special "never again" price. One click to add — no re-entry of payment info.</div>
+            <div class="funnel-card-tags">
+              <span class="funnel-tag">OTO Price</span><span class="funnel-tag">1-Click Add</span><span class="funnel-tag">Time Limit</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="funnel-arrow">↓</div>
+
+        <div class="funnel-step">
+          <div class="funnel-card" onclick="showToast('✏️ Editing Email Sequence...')">
+            <div class="funnel-card-header">
+              <span class="funnel-step-label">Step 5</span>
+              <span class="funnel-conv">28% Open Rate</span>
+            </div>
+            <div class="funnel-card-title">7-Email Nurture Sequence</div>
+            <div class="funnel-card-desc" id="fStep5Desc">AI-written 7-day email sequence. Delivers value, builds trust, handles objections, and drives non-buyers back to the sales page with different angles.</div>
+            <div class="funnel-card-tags">
+              <span class="funnel-tag">Day 1: Welcome</span><span class="funnel-tag">Day 3: Value</span><span class="funnel-tag">Day 5: Objections</span><span class="funnel-tag">Day 7: Final Push</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="funnel-arrow">↓</div>
+
+        <div class="funnel-step">
+          <div class="funnel-card" style="border-color:rgba(197,155,39,0.3);background:rgba(197,155,39,0.04);" onclick="showToast('✏️ Editing Thank You page...')">
+            <div class="funnel-card-header">
+              <span class="funnel-step-label" style="color:var(--violet-bright);">Step 6</span>
+              <span class="funnel-conv">100% See</span>
+            </div>
+            <div class="funnel-card-title">Thank You + Member Access</div>
+            <div class="funnel-card-desc">Confirms purchase. Delivers product access instantly. Includes referral prompt, next-step instructions, and social share buttons to extend reach.</div>
+            <div class="funnel-card-tags">
+              <span class="funnel-tag">Access Delivery</span><span class="funnel-tag">Referral CTA</span><span class="funnel-tag">Social Share</span>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /funnel-flow -->
+
+      <div id="funnelPublishRow" style="display:none;text-align:center;margin-top:2rem;">
+        <button class="btn-publish" style="padding:14px 32px;font-size:1rem;" onclick="showToast('🚀 Funnel is LIVE! Share your funnel link.')">🚀 Publish Funnel →</button>
+        <p style="font-size:0.8rem;color:var(--text3);margin-top:0.75rem;">Your complete funnel is ready to take live traffic and convert customers.</p>
+      </div>
+
+    </div><!-- /funnel-inner -->
+  </div><!-- /funnel-builder -->
+
+</div><!-- /phase3 -->
+
+
+<!-- SUBSCRIPTION MODAL -->
+<div class="modal-overlay" id="subscribeModal">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div style="font-size:2rem;margin-bottom:0.5rem;">🚀</div>
+    <div class="modal-title">BuildAI Pro</div>
+    <div style="font-size:0.9rem;color:var(--text2);font-weight:300;">Unlimited websites · Unlimited funnels · Billed monthly</div>
+    <div class="modal-price"><sup>$</sup>200<sub>/mo</sub></div>
+    <div style="font-size:0.8rem;color:var(--text3);">Cancel anytime · No setup fees</div>
+    <ul class="modal-perks">
+      <li class="modal-perk"><span class="chk">✓</span>Unlimited website builds per month</li>
+      <li class="modal-perk"><span class="chk">✓</span>Unlimited AI-generated sales funnels</li>
+      <li class="modal-perk"><span class="chk">✓</span>Full drag-and-drop editor access</li>
+      <li class="modal-perk"><span class="chk">✓</span>Custom domain connection</li>
+      <li class="modal-perk"><span class="chk">✓</span>AI copywriting for all sections</li>
+      <li class="modal-perk"><span class="chk">✓</span>Email sequence builder (7-day sequences)</li>
+      <li class="modal-perk"><span class="chk">✓</span>Analytics and conversion tracking</li>
+      <li class="modal-perk"><span class="chk">✓</span>Priority support from the BuildAI team</li>
+    </ul>
+    
+    <!-- 2026-11-14: PayPal stays off (it delivered nothing). Checkout is a live Stripe $200/mo subscription Payment Link; access is set up by hand after payment. -->
+    <a href="https://buy.stripe.com/14AeVc1Ga906fDV00Z77P0E" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;min-height:52px;margin-top:1rem;margin-bottom:0.5rem;padding:0.75rem 1rem;border-radius:0.75rem;background:#C59B27;color:#111827;font-weight:700;font-size:1rem;text-decoration:none;">Subscribe for $200/month</a>
+    <div style="font-size:0.8rem;color:var(--text3);margin-bottom:0.5rem;">Secure checkout by Stripe (card or US bank account). After you subscribe, Josh will email you to set up your access. Questions: <a href="tel:+12055788884">205-578-8884</a></div>
+
+    <p class="modal-guarantee">🔐 Secure checkout · 30-day money-back guarantee</p>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <span class="t-icon">✓</span>
+  <span id="toastMsg">Action completed</span>
+</div>
+
+<!-- 2026-11-14: PayPal subscription scripts removed (see paused notice above). -->
+
+<script>
+// ═══════════════════════════════════════════
+// BUILDAI — APP LOGIC
+// ═══════════════════════════════════════════
+
+// ── STATE ──────────────────────────────────
+const state = {
+  user: null,
+  answers: {
+    industry: null,
+    siteType: null,
+    bizName: '',
+    bizDesc: '',
+    audience: '',
+    siteGoal: '',
+    palette: null,
+    tone: null,
+    features: ['hero','features','products','testimonials']
+  },
+  currentQuestion: 1,
+  brandColor: '#C59B27'
+};
+
+// ── PHASE NAVIGATION ──────────────────────
+function showPhase(n) {
+  document.querySelectorAll('.phase').forEach(p => p.classList.remove('active'));
+  document.getElementById('phase' + n).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+// ── AUTH ───────────────────────────────────
+function switchTab(tab) {
+  document.getElementById('form-signup').style.display = tab === 'signup' ? 'block' : 'none';
+  document.getElementById('form-login').style.display  = tab === 'login'  ? 'block' : 'none';
+  document.getElementById('tab-signup').classList.toggle('active', tab === 'signup');
+  document.getElementById('tab-login').classList.toggle('active', tab === 'login');
+}
+
+function showAuthModal(tab) { switchTab(tab); }
+
+function handleSignup() {
+  const name  = document.getElementById('su-name')?.value?.trim() || 'User';
+  const email = document.getElementById('su-email')?.value?.trim() || 'user@email.com';
+  if (!name && !email) { showToast('Please fill in your details'); return; }
+  state.user = { name: name || 'Builder', email };
+  const initials = (name || 'U').split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+  document.getElementById('userAvatar').textContent = initials || 'U';
+  document.getElementById('userName').textContent = 'Hey, ' + (name.split(' ')[0] || 'Builder') + ' 👋';
+  showPhase(2);
+  showToast('✓ Welcome to BuildAI!');
+}
+
+// ── WIZARD ─────────────────────────────────
+function selectChoice(btn, key) {
+  const grid = btn.parentElement;
+  grid.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  state.answers[key] = btn.querySelector('.choice-label')?.textContent;
+  const nextBtn = document.getElementById('q' + state.currentQuestion + 'next');
+  if (nextBtn) nextBtn.disabled = false;
+}
+
+function toggleFeature(btn, feat) {
+  btn.classList.toggle('selected');
+  const idx = state.answers.features.indexOf(feat);
+  if (idx > -1) state.answers.features.splice(idx,1);
+  else state.answers.features.push(feat);
+}
+
+function selectPalette(btn, name) {
+  document.querySelectorAll('.palette-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  state.answers.palette = name;
+  // update color based on palette
+  const colorMap = {
+    'violet-cyan':'#C59B27','gold-dark':'#C9A84C',
+    'emerald':'#059669','fire':'#e85d04','ocean':'#2979FF','noir':'#111827'
+  };
+  state.brandColor = colorMap[name] || '#C59B27';
+  checkQ5();
+}
+
+function checkQ3() {
+  const ok = document.getElementById('bizName').value.trim() && document.getElementById('bizDesc').value.trim().length > 10;
+  document.getElementById('q3next').disabled = !ok;
+  if(ok) {
+    state.answers.bizName = document.getElementById('bizName').value.trim();
+    state.answers.bizDesc = document.getElementById('bizDesc').value.trim();
+  }
+}
+function checkQ4() {
+  const ok = document.getElementById('audience').value.trim().length > 15;
+  document.getElementById('q4next').disabled = !ok;
+  if(ok){
+    state.answers.audience = document.getElementById('audience').value.trim();
+    state.answers.siteGoal = document.getElementById('siteGoal').value.trim();
+  }
+}
+function checkQ5() {
+  const hasPalette = state.answers.palette;
+  const hasTone = state.answers.tone;
+  document.getElementById('q5next').disabled = !(hasPalette || hasTone);
+}
+
+function nextQuestion(n) {
+  document.getElementById('q'+n).style.display = 'none';
+  document.getElementById('q'+(n+1)).style.display = 'block';
+  state.currentQuestion = n + 1;
+  updateProgress(n);
+}
+function prevQuestion(n) {
+  document.getElementById('q'+n).style.display = 'none';
+  document.getElementById('q'+(n-1)).style.display = 'block';
+  state.currentQuestion = n - 1;
+  updateProgress(n-2);
+}
+function updateProgress(done) {
+  for(let i=1;i<=6;i++){
+    const dot = document.getElementById('wd'+i);
+    if(i <= done) { dot.classList.remove('active'); dot.classList.add('done'); dot.textContent='✓'; }
+    else if(i === done+1) { dot.classList.add('active'); dot.classList.remove('done'); dot.textContent=i; }
+    else { dot.classList.remove('active','done'); dot.textContent=i; }
+    if(i<6) document.getElementById('wl'+i)?.classList.toggle('done', i<=done);
+  }
+}
+
+// ── AI BUILDING ────────────────────────────
+function startBuilding() {
+  // hide all question cards
+  for(let i=1;i<=6;i++) { const q=document.getElementById('q'+i); if(q) q.style.display='none'; }
+  document.getElementById('wizardProgress').style.display = 'none';
+  const bs = document.getElementById('buildingScreen');
+  bs.classList.add('visible');
+
+  const steps = ['bs1','bs2','bs3','bs4','bs5','bs6'];
+  const prog  = document.getElementById('buildProgress');
+  let i = 0;
+
+  function tick() {
+    if(i>0) {
+      document.getElementById(steps[i-1]).classList.remove('active');
+      document.getElementById(steps[i-1]).classList.add('done');
+      document.getElementById(steps[i-1]).querySelector('.bs-icon').textContent='✅';
+    }
+    if(i < steps.length) {
+      document.getElementById(steps[i]).classList.add('active');
+      prog.style.width = ((i+1)/steps.length*100)+'%';
+      i++;
+      setTimeout(tick, 900 + Math.random()*400);
+    } else {
+      prog.style.width = '100%';
+      document.getElementById('buildingSubtext').textContent = 'Your website is ready! 🎉';
+      setTimeout(launchEditor, 800);
+    }
+  }
+  tick();
+}
+
+function launchEditor() {
+  const biz = state.answers.bizName || 'Your Business';
+  const desc = state.answers.bizDesc || 'We deliver exceptional value to our customers every day.';
+
+  // Populate editor with AI-"generated" content
+  const el = id => document.getElementById(id);
+  if(el('siteNavLogo'))   el('siteNavLogo').textContent   = biz;
+  if(el('siteH1'))        el('siteH1').textContent        = getHeadline(biz, state.answers.industry);
+  if(el('siteSub'))       el('siteSub').textContent       = getSubline(desc, state.answers.audience);
+  if(el('siteCta'))       el('siteCta').textContent       = getCTA(state.answers.siteType);
+  if(el('propSiteName'))  el('propSiteName').value        = biz;
+
+  // Apply brand color
+  applyBrandColor(state.brandColor);
+  el('siteCta').style.background = state.brandColor;
+  el('siteNavBtn').style.background = state.brandColor;
+
+  // Funnel personalization
+  if(el('funnelTitle'))    el('funnelTitle').textContent    = biz + ' Sales Funnel';
+  if(el('funnelSubtitle')) el('funnelSubtitle').textContent = 'AI-generated for ' + (state.answers.industry || 'your business');
+  if(el('fStep1Title'))    el('fStep1Title').textContent    = biz + ' — ' + (state.answers.siteGoal || 'Main Offer');
+  if(el('fStep3Title'))    el('fStep3Title').textContent    = 'Sales Page — ' + biz;
+  if(el('fStep5Desc'))     el('fStep5Desc').textContent     = '7-day AI-written email sequence tailored for ' + (state.answers.industry||'your market') + ' audience. Drives non-buyers back with value and urgency.';
+
+  showPhase(3);
+  showToast('🎉 Your website is ready! Start editing.');
+
+  // Trigger funnel build after 2s delay to be discovered
+  setTimeout(() => showToast('🚀 Tip: Click "Sales Funnel" tab to build your funnel next!'), 3000);
+}
+
+function getHeadline(biz, industry) {
+  const headlines = {
+    'Coaching / Education': `Master ${biz} — Transform Your Life in 30 Days`,
+    'E-Commerce / Retail': `Shop ${biz} — Premium Products, Unbeatable Value`,
+    'Legal / Sovereign': `Know Your Rights with ${biz} — Sovereignty Starts Here`,
+    'Tech / SaaS': `${biz} — The Software That Powers Your Business Forward`,
+    'Health / Beauty': `Transform Your Health with ${biz}`,
+    'Finance / Investing': `Build Wealth with ${biz} — Proven Strategies That Work`,
+  };
+  return headlines[industry] || `Welcome to ${biz} — Where Excellence Meets Results`;
+}
+function getSubline(desc, audience) {
+  if(desc.length > 20) return desc.slice(0,120) + (desc.length > 120 ? '...' : '');
+  return 'The premium solution designed for people who demand results. Start your transformation today.';
+}
+function getCTA(type) {
+  const ctas = {
+    'Online Store': 'Shop Now →',
+    'Landing Page': 'Claim Your Spot →',
+    'Business Website': 'Get Started Today →',
+    'Course / Membership': 'Enroll Now →',
+  };
+  return ctas[type] || 'Get Started →';
+}
+
+// ── EDITOR ─────────────────────────────────
+function switchEditorMode(mode) {
+  const isWebsite = mode === 'website';
+  document.getElementById('websiteEditor').style.display     = isWebsite ? 'flex' : 'none';
+  document.getElementById('funnelBuilder').classList.toggle('active', !isWebsite);
+  document.getElementById('deviceSwitcher').style.display    = isWebsite ? 'flex' : 'none';
+  document.getElementById('modeWebsite').classList.toggle('active', isWebsite);
+  document.getElementById('modeFunnel').classList.toggle('active', !isWebsite);
+
+  if(!isWebsite && document.getElementById('funnelFlow').style.display === 'none') {
+    buildFunnel();
+  }
+}
+
+function buildFunnel() {
+  document.getElementById('funnelGenerating').style.display = 'flex';
+  const prog = document.getElementById('funnelProgress');
+  let w = 0;
+  const t = setInterval(() => {
+    w += 4 + Math.random() * 8;
+    prog.style.width = Math.min(w,100) + '%';
+    if(w >= 100) {
+      clearInterval(t);
+      document.getElementById('funnelGenerating').style.display = 'none';
+      document.getElementById('funnelMetrics').style.display    = 'block';
+      document.getElementById('funnelFlow').style.display       = 'flex';
+      document.getElementById('funnelPublishRow').style.display = 'block';
+      showToast('🚀 Sales funnel generated! Review and publish.');
+    }
+  }, 120);
+}
+
+function selectSection(id) {
+  document.querySelectorAll('.editable-section').forEach(s => s.classList.remove('selected'));
+  document.getElementById(id)?.classList.add('selected');
+
+  const labels = {
+    'sec-nav':      'Navigation Bar',
+    'sec-hero':     'Hero Section',
+    'sec-features': 'Features Row',
+    'sec-products': 'Products Section',
+    'sec-testi':    'Testimonials',
+    'sec-footer':   'Footer'
+  };
+  const panel = document.getElementById('propPanel');
+  panel.innerHTML = `
+    <div style="background:var(--s2);border:1px solid var(--border);border-radius:var(--r);padding:0.875rem;margin-bottom:1rem;">
+      <div style="font-size:0.7rem;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;">Selected</div>
+      <div style="font-size:0.875rem;font-weight:500;color:var(--violet-bright);">${labels[id]||id}</div>
+    </div>
+    <div class="prop-group">
+      <div class="prop-label">Background</div>
+      <div class="color-swatches">
+        <div class="swatch" style="background:#ffffff;border:1px solid #e5e7eb;" onclick="event.stopPropagation();setSectionBg('${id}','#ffffff',this)"></div>
+        <div class="swatch" style="background:#f9fafb;border:1px solid #e5e7eb;" onclick="event.stopPropagation();setSectionBg('${id}','#f9fafb',this)"></div>
+        <div class="swatch" style="background:#111827;" onclick="event.stopPropagation();setSectionBg('${id}','#111827',this)"></div>
+        <div class="swatch" style="background:var(--violet-dim);border:1px solid var(--violet-glow);" onclick="event.stopPropagation();setSectionBg('${id}','rgba(197,155,39,0.06)',this)"></div>
+      </div>
+    </div>
+    <button class="btn-editor" style="width:100%;margin-top:0.5rem;font-size:0.775rem;" onclick="showToast('🤖 AI rewriting this section...')">🤖 AI Rewrite</button>
+    <button class="btn-editor" style="width:100%;margin-top:0.5rem;font-size:0.775rem;" onclick="deleteSection('${id}')">🗑 Remove Section</button>
+  `;
+}
+
+function setSectionBg(id, color, swatch) {
+  const sec = document.getElementById(id);
+  if(sec) {
+    const inner = sec.querySelector('[class^="site-"]') || sec.firstElementChild;
+    if(inner) inner.style.background = color;
+    if(color === '#111827') {
+      const texts = sec.querySelectorAll('[contenteditable]');
+      texts.forEach(t => { t.style.color = '#fff'; });
+    }
+  }
+}
+
+function deleteSection(id) {
+  const sec = document.getElementById(id);
+  if(sec) { sec.style.opacity='0'; sec.style.transform='translateY(-10px)'; setTimeout(()=>sec.remove(),300); }
+  showToast('Section removed');
+}
+
+function setDevice(d, btn) {
+  document.querySelectorAll('.dev-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const frame = document.getElementById('deviceFrame');
+  frame.className = 'canvas-device-frame ' + d;
+}
+
+function changeBrandColor(color, swatch) {
+  document.querySelectorAll('.color-swatches .swatch').forEach(s=>s.classList.remove('selected'));
+  swatch.classList.add('selected');
+  applyBrandColor(color);
+  state.brandColor = color;
+}
+
+function applyBrandColor(color) {
+  const cta = document.getElementById('siteCta');
+  const navBtn = document.getElementById('siteNavBtn');
+  if(cta) cta.style.background = color;
+  if(navBtn) navBtn.style.background = color;
+  document.querySelectorAll('.product-price-edit').forEach(el => el.style.color = color);
+}
+
+function updateSiteName(val) {
+  const logo = document.getElementById('siteNavLogo');
+  if(logo) logo.textContent = val || 'YourBrand';
+  const footer = document.querySelector('[class="site-footer-preview"] div[contenteditable]');
+  if(footer) footer.textContent = val || 'YourBrand';
+}
+
+function updateCTA(val) {
+  const cta = document.getElementById('siteCta');
+  if(cta) cta.textContent = val || 'Get Started →';
+}
+
+function triggerImageUpload() {
+  document.getElementById('globalUpload').click();
+}
+function handleGlobalUpload(e) {
+  const file = e.target.files[0];
+  if(!file) return;
+  showToast('📷 Image uploaded to media library');
+}
+function triggerProductUpload(wrapper) {
+  wrapper.querySelector('input[type="file"]').click();
+}
+function handleProductImg(e, wrapper) {
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    wrapper.style.backgroundImage = `url(${ev.target.result})`;
+    wrapper.style.backgroundSize = 'cover';
+    wrapper.style.backgroundPosition = 'center';
+    wrapper.textContent = '';
+    showToast('📷 Product photo uploaded!');
+  };
+  reader.readAsDataURL(file);
+}
+
+function newProject() {
+  if(confirm('Start a new website? Your current work is saved.')) {
+    state.answers = { industry:null,siteType:null,bizName:'',bizDesc:'',audience:'',siteGoal:'',palette:null,tone:null,features:['hero','features','products','testimonials'] };
+    state.currentQuestion = 1;
+    showPhase(2);
+    // reset wizard
+    for(let i=1;i<=6;i++){
+      const q=document.getElementById('q'+i);
+      if(q){ q.style.display = i===1?'block':'none'; }
+      document.getElementById('wd'+i)?.classList.remove('active','done');
+    }
+    document.getElementById('wd1')?.classList.add('active');
+    document.getElementById('buildingScreen')?.classList.remove('visible');
+    document.getElementById('wizardProgress').style.display='flex';
+    document.querySelectorAll('.choice-btn').forEach(b=>b.classList.remove('selected'));
+    document.querySelectorAll('.palette-btn').forEach(b=>b.classList.remove('selected'));
+    ['q1next','q2next','q3next','q4next','q5next'].forEach(id=>{
+      const el=document.getElementById(id); if(el) el.disabled=true;
+    });
+    showToast('✓ Ready to build a new site!');
+  }
+}
+
+// ── SUBSCRIBE ──────────────────────────────
+function showSubscribeModal() {
+  document.getElementById('subscribeModal').classList.add('open');
+}
+function closeModal() {
+  document.getElementById('subscribeModal').classList.remove('open');
+}
+
+// ── TOAST ──────────────────────────────────
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ── MODAL CLOSE ON OUTSIDE CLICK ──────────
+document.getElementById('subscribeModal').addEventListener('click', function(e){
+  if(e.target === this) closeModal();
+});
+
+// ── KEYBOARD SHORTCUTS ─────────────────────
+document.addEventListener('keydown', e => {
+  if(e.key === 'Escape') closeModal();
+  if((e.ctrlKey||e.metaKey) && e.key==='s') { e.preventDefault(); showToast('✓ Draft saved'); }
+  if((e.ctrlKey||e.metaKey) && e.key==='z') { e.preventDefault(); showToast('↩ Undo'); }
+});
+</script>
+
+<footer style="max-width:960px;margin:24px auto;padding:20px 16px;border-top:1px solid #232733;text-align:center;font-family:system-ui,sans-serif;font-size:13px;color:#8a94a6;">&copy; 2026 Digital Envisioned · Montgomery, AL · <a href="/legal/privacy/" style="color:#8a94a6;">Privacy</a> · <a href="/legal/terms/" style="color:#8a94a6;">Terms</a> · <a href="/legal/refunds/" style="color:#8a94a6;">Refund</a></footer>
+</body>
+</html>
